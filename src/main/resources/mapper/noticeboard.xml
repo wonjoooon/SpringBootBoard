@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wonjun.model.BoardDao">
+    <resultMap id="noticeResult" type="noticeboardDto">
+        <result property="article_no" column="article_no" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="write_date" column="write_date" />
+        <result property="write_id" column="write_id" />
+    </resultMap>
+
+    <select id="selectAllArticles" resultMap="noticeResult">
+        <![CDATA[
+        select * from noticeboard order by write_date desc
+        ]]>
+    </select>
+
+    <insert id="insertArticle" parameterType="noticeboardDto">
+        <![CDATA[
+        insert into noticeboard (title, content, write_date, write_id)
+        values(#{title}, #{content}, default, #{write_id});
+        ]]>
+    </insert>
+
+    <select id="selectArticle" resultType="noticeboardDto" parameterType="int">
+        <![CDATA[
+        select * from noticeboard where article_no=#{article_no}
+        ]]>
+    </select>
+
+    <update id="updateArticle" parameterType="noticeboardDto">
+        <![CDATA[
+        update noticeboard set title=#{title}, content=#{content} where article_no=#{article_no}
+        ]]>
+    </update>
+
+    <delete id="removeArticle" parameterType="int">
+        <![CDATA[
+        delete from noticeboard where article_no=#{article_no}
+        ]]>
+    </delete>
+</mapper>
